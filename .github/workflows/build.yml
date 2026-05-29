@@ -1,0 +1,67 @@
+name: build-geosite
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - domains.txt
+      - build.py
+      - proto/geosite.proto
+      - requirements.txt
+      - .github/workflows/build.yml
+  schedule:
+    # every 6h — keeps upstream runetfreedom categories fresh in our merged dat
+    - cron: "17 */6 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-geosite
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install deps
+        run: pip install -r requirements.txt
+
+      - name: Generate protobuf module
+        run: python -m grpc_tools.protoc -Iproto --python_out=. proto/geosite.proto
+
+      - name: Build merged geosite.dat
+        run: python build.py --out geosite.dat
+
+      - name: Sanity check
+        run: |
+          python - <<'PY'
+          import geosite_pb2
+          g = geosite_pb2.GeoSiteList()
+          g.ParseFromString(open("geosite.dat","rb").read())
+          cats = {e.country_code.upper(): e for e in g.entry}
+          assert "AI-EXTRA" in cats, "custom category missing"
+          assert "RU-BLOCKED" in cats, "upstream category missing"
+          vals = {d.value for d in cats["AI-EXTRA"].domain}
+          assert "groq.com" in vals, "groq.com missing"
+          print(f"OK: {len(g.entry)} categories, AI-EXTRA has {len(vals)} domains")
+          PY
+
+      - name: Publish geosite.dat to release branch
+        run: |
+          mkdir -p /tmp/out && cp geosite.dat /tmp/out/
+          cd /tmp/out
+          git init -q
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -q -b release
+          git add geosite.dat
+          git commit -q -m "build: geosite.dat $(date -u +%FT%TZ)"
+          git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" release

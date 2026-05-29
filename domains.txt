@@ -1,0 +1,65 @@
+# Custom geosite category "ai-extra" — AI/LLM service domains not covered by
+# runetfreedom's geosite categories. One domain per line. Blank lines and
+# lines starting with # are ignored. Each entry is a RootDomain match:
+# it covers the domain itself AND all subdomains (e.g. groq.com -> api.groq.com).
+#
+# Edit this file and push — the GitHub Action rebuilds geosite.dat and Happ
+# picks it up automatically on its next geo-file refresh. No deeplink re-import.
+
+# Anthropic
+anthropic.com
+claude.ai
+claudeusercontent.com
+
+# Google AI (note: generic google geosite stays direct; these are AI-specific)
+gemini.google.com
+aistudio.google.com
+generativelanguage.googleapis.com
+ai.google.dev
+makersuite.google.com
+labs.google
+deepmind.google
+notebooklm.google.com
+
+# xAI / Grok
+x.ai
+grok.com
+
+# Groq (LPU inference — api.groq.com)
+groq.com
+
+# Perplexity
+perplexity.ai
+
+# Microsoft / GitHub Copilot
+copilot.microsoft.com
+githubcopilot.com
+
+# Hugging Face
+huggingface.co
+hf.co
+
+# Image / media generation
+midjourney.com
+ideogram.ai
+leonardo.ai
+stability.ai
+runwayml.com
+
+# Audio generation
+elevenlabs.io
+suno.com
+udio.com
+
+# Chat / agents / misc
+character.ai
+poe.com
+mistral.ai
+replicate.com
+deepseek.com
+
+# AI coding tools
+cursor.com
+cursor.sh
+v0.app
+lovable.dev

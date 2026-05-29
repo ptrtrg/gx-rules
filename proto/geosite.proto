@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+// Minimal subset of v2fly/v2ray-core app/router/routercommon/common.proto
+// sufficient to read and write geosite.dat (GeoSiteList).
+package geosite;
+
+message Domain {
+  enum Type {
+    Plain = 0;   // substring match
+    Regex = 1;   // regular expression
+    RootDomain = 2; // domain + all subdomains (this is what "domain:" / bare entries use)
+    Full = 3;    // exact full match
+  }
+  message Attribute {
+    string key = 1;
+    oneof typed_value {
+      bool bool_value = 2;
+      int64 int_value = 3;
+    }
+  }
+  Type type = 1;
+  string value = 2;
+  repeated Attribute attribute = 3;
+}
+
+message GeoSite {
+  string country_code = 1;
+  repeated Domain domain = 2;
+}
+
+message GeoSiteList {
+  repeated GeoSite entry = 1;
+}
