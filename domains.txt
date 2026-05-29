@@ -1,10 +1,7 @@
-# Custom geosite category "ai-extra" — AI/LLM service domains not covered by
-# runetfreedom's geosite categories. One domain per line. Blank lines and
-# lines starting with # are ignored. Each entry is a RootDomain match:
+# Custom geosite category "ai-extra". One domain per line; blank lines and
+# lines starting with # are ignored. Each entry is a root-domain match:
 # it covers the domain itself AND all subdomains (e.g. groq.com -> api.groq.com).
-#
-# Edit this file and push — the GitHub Action rebuilds geosite.dat and Happ
-# picks it up automatically on its next geo-file refresh. No deeplink re-import.
+# Edit and push — CI rebuilds geosite.dat automatically.
 
 # Anthropic
 anthropic.com
