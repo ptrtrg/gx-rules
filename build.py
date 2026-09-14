@@ -22,6 +22,12 @@ UPSTREAM_GEOSITE = (
     "russia-v2ray-rules-dat/release/geosite.dat"
 )
 
+# Upstream categories we never reference. Together they are ~64 MB of the
+# ~74 MB upstream file; dropping them keeps the published dat around 9 MB so a
+# cold CDN fetch finishes inside the routing client's download timeout
+# (Happ failed with "не удалось загрузить геофайлы" on the 74 MB file, 2026-09-14).
+DROP_CATEGORIES = {"RU-BLOCKED-ALL", "ANTIFILTER-DOWNLOAD"}
+
 
 def load_domains(path):
     domains = []
@@ -52,6 +58,8 @@ def main():
                     help="custom category code (referenced lowercased as geosite:<code>)")
     ap.add_argument("--domains", default="domains.txt")
     ap.add_argument("--upstream", default=UPSTREAM_GEOSITE)
+    ap.add_argument("--keep-all", action="store_true",
+                    help="keep every upstream category (do not drop DROP_CATEGORIES)")
     args = ap.parse_args()
 
     code = args.category.upper()
@@ -66,6 +74,12 @@ def main():
     removed = upstream_count - len(kept)
     if removed:
         print(f"-> replaced existing '{code}' category", file=sys.stderr)
+
+    if not args.keep_all:
+        before = len(kept)
+        kept = [e for e in kept if e.country_code.upper() not in DROP_CATEGORIES]
+        print(f"-> dropped {before - len(kept)} oversized unused categories: "
+              f"{sorted(DROP_CATEGORIES)}", file=sys.stderr)
 
     domains = load_domains(args.domains)
     if not domains:

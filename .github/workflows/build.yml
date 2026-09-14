@@ -51,6 +51,10 @@ jobs:
           assert "RU-BLOCKED" in cats, "upstream category missing"
           vals = {d.value for d in cats["AI-EXTRA"].domain}
           assert "groq.com" in vals, "groq.com missing"
+          assert "claude.com" in vals, "claude.com missing"
+          assert "RU-BLOCKED-ALL" not in cats, "oversized category not dropped"
+          size_mb = len(open("geosite.dat","rb").read()) / 1e6
+          assert size_mb < 20, f"geosite.dat too big: {size_mb:.1f} MB (cold CDN fetch would time out in Happ)"
           print(f"OK: {len(g.entry)} categories, AI-EXTRA has {len(vals)} domains")
           PY
 

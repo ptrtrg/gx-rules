@@ -8,6 +8,11 @@ defined in [`domains.txt`](domains.txt) and publishes the result to the
 https://raw.githubusercontent.com/ptrtrg/gx-rules/release/geosite.dat
 ```
 
+Two oversized upstream categories (`ru-blocked-all`, `antifilter-download`,
+~64 MB together) are dropped — nothing of ours references them, and the full
+74 MB file made Happ time out on a cold CDN fetch. Pass `--keep-all` to keep
+them. CI fails the build if the result exceeds 20 MB.
+
 ## Edit
 
 Add or remove a line in [`domains.txt`](domains.txt) and push to `main`. Each
