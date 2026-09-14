@@ -6,6 +6,7 @@
 # Anthropic
 anthropic.com
 claude.ai
+claude.com
 claudeusercontent.com
 
 # Google AI (note: generic google geosite stays direct; these are AI-specific)
