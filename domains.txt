@@ -61,3 +61,7 @@ cursor.com
 cursor.sh
 v0.app
 lovable.dev
+
+# Non-AI hosts throttled/blocked by DPI on the direct RU route
+# (TLS handshake stalls after ClientHello). Notion images/files CDN; app.notion.com itself works direct.
+notionusercontent.com
