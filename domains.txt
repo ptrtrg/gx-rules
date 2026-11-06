@@ -18,6 +18,10 @@ makersuite.google.com
 labs.google
 deepmind.google
 notebooklm.google.com
+# Gemini web backend: image upload/processing session (geminiweb-pa) and AI Studio backend (alkalimakersuite-pa);
+# on the direct RU route Google answers 503 and Gemini drops the attached image ("что-то пошло не так (1)")
+geminiweb-pa.clients6.google.com
+alkalimakersuite-pa.clients6.google.com
 
 # xAI / Grok
 x.ai
