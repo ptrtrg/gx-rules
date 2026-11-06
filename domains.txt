@@ -49,6 +49,9 @@ elevenlabs.io
 suno.com
 udio.com
 
+# inference.sh (infsh CLI, image generation): Cloudflare WAF blocks RU IPs (403 "Attention Required")
+inference.sh
+
 # Chat / agents / misc
 character.ai
 poe.com
