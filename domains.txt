@@ -76,3 +76,8 @@ notionusercontent.com
 # Pure (dating app): foreign service, unstable on the direct route from mobile networks
 pure.app
 pure.dating
+
+# MindMeister / Meister suite: Cloudflare returns 403 to Russian IPs (login via accounts.meister.co)
+mindmeister.com
+meister.co
+meistertask.com
